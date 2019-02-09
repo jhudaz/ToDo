@@ -17,9 +17,9 @@ class Login extends Component {
   }
   //if the backend response is a success redirect to the todo component
   componentDidUpdate() {
-    if(this.props.reducerApp.success){
-      this.props.history.push('/ToDos')
-    }
+    if (this.props.reducerApp.success) {
+      this.props.history.push('/ToDos');
+    } 
   }
   //to prevent the default action of the sign in button  and call the action  
   login(e) {

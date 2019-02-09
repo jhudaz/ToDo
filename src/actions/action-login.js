@@ -2,7 +2,6 @@ import axios from 'axios';
 const apiUrl = 'http://localhost:7000';
 
 export function authenticate(email, password) {
-  console.log(email, password)
   return dispatch => {
     return axios
       .post(`${apiUrl}/users/auth`, { email, password })
@@ -17,3 +16,4 @@ export function authenticate(email, password) {
       })
   }
 }
+
