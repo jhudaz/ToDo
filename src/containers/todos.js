@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../App.scss';
 
 class ToDos extends Component {
   render() {
@@ -9,5 +9,10 @@ class ToDos extends Component {
     );
   }
 }
+function mapStateToProps(){
 
+}
+function mapDispatchToProps(){
+  
+}
 export default ToDos;
