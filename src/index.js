@@ -20,6 +20,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 let store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));
 let persistor = persistStore(store);
+
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={<div>Loading</div>} persistor={persistor}>

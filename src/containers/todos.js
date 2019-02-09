@@ -5,6 +5,7 @@ class ToDos extends Component {
   render() {
     return (
       <div>
+        <h1>To DO...</h1>
       </div>
     );
   }
