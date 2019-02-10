@@ -3,7 +3,6 @@ const apiUrl = 'http://localhost:7000';
 
 //action to get all the to dos from the user
 export function getToDos(token) {
-  console.log('id del usuario para traer los registros:', token)
   return dispatch => {
     return axios
       .get(`${apiUrl}/todos/todo`, { params: { token } })
@@ -21,7 +20,6 @@ export function getToDos(token) {
 
 //action to get de user who  log in the app
 export function getUser(token) {
-  console.log('id del usuario:', token)
   return dispatch => {
     return axios
       .get(`${apiUrl}/users/getUser`, { params: { token } })
@@ -43,7 +41,6 @@ export function getUser(token) {
 }
 //action to update the  todo state
 export function updateToDoState(id, done, token) {
-  console.log('id:',id,'Done:',done,'userID:',token)
   return dispatch => {
     return axios
       .put(`${apiUrl}/todos/todoState`, { id, done })
