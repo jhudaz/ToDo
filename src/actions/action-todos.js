@@ -44,17 +44,32 @@ export function updateToDoState(id, done, token) {
   return dispatch => {
     return axios
       .put(`${apiUrl}/todos/todoState`, { id, done })
-      .then(res =>{
+      .then(res => {
         dispatch(
           getToDos(token)
         )
       })
-      .catch(err =>{
+      .catch(err => {
         throw err
       })
   }
 }
-
+//action to delete a todo
+export function deleteToDo(id, token) {
+  console.log('va a liminar al: ', id)
+  return dispatch => {
+    return axios
+      .delete(`${apiUrl}/todos/todo`, { data: { id } })
+      .then(res => {
+        dispatch(
+          getToDos(token)
+        )
+      })
+      .catch(err => {
+        throw err
+      })
+  }
+}
 //action to return to the login
 export function logOut() {
   return {

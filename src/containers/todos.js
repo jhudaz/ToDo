@@ -8,6 +8,7 @@ import {
   getToDos,
   updateToDoState,
   createToDo,
+  deleteToDo,
   logOut
 } from '../actions';
 
@@ -18,9 +19,9 @@ class ToDos extends Component {
     super(props)
     this.state = {
       done: false,
+      description: '',
       visible: false,
-      confirmLoading: false,
-      description: ''
+      confirmLoading: false
     }
     this.prevent = this.prevent.bind(this);
     this.logOutButton = this.logOutButton.bind(this);
@@ -28,6 +29,7 @@ class ToDos extends Component {
     this.handleState = this.handleState.bind(this);
     this.createButtons = this.createButtons.bind(this);
     this.addButton = this.addButton.bind(this);
+    this.deleteButton = this.deleteButton.bind(this);
     //MODAL
     this.showModal = this.showModal.bind(this);
     this.handleOk = this.handleOk.bind(this);
@@ -42,9 +44,18 @@ class ToDos extends Component {
   prevent(e) {
     e.preventDefault();
   }
+  //to add a todo
   addButton(e) {
     this.prevent(e);
     this.showModal(e)
+  }
+  //to delete a todo
+  deleteButton(e,i){
+    this.prevent(e);
+    this.props.deleteToDo(
+      this.props.reducerApp.todos[i].id,
+      this.props.reducerApp.token
+    )
   }
   //to clear the state of redux and log out
   logOutButton(e) {
@@ -61,7 +72,7 @@ class ToDos extends Component {
     )
   }
   //to create the todo buttons for edit and delete
-  createButtons() {
+  createButtons(i) {
     return (
       <div>
         <button
@@ -69,7 +80,8 @@ class ToDos extends Component {
           <Icon type="edit" />
         </button>
         <button
-          className="red">
+          className="red"
+          onClick={ e => this.deleteButton(e, i)}>
           <Icon type="close" />
         </button>
       </div>
@@ -78,10 +90,10 @@ class ToDos extends Component {
   //to create the todos list
   createList(todos, i) {
     return (
-      <li index={i}>
+      <li key={i}>
         <div>
           <ul className="list">
-            <li>{this.createButtons()}</li>
+            <li>{this.createButtons(i)}</li>
             <li>{todos.description}</li>
             <li>
               <Switch
@@ -97,17 +109,18 @@ class ToDos extends Component {
     )
   }
   //MODAL
-
+  //show the modal whenhis state is true
   showModal() {
     this.setState({
       visible: true,
     });
   }
-
+  //call the createToDo action
   handleOk() {
     this.setState({
       ModalText: 'The modal will be closed after two seconds',
-      confirmLoading: true,
+      description: '',
+      confirmLoading: true
     });
     this.props.createToDo(
       this.state.description,
@@ -120,7 +133,7 @@ class ToDos extends Component {
       });
     }, 2000);
   }
-
+  //close the modal
   handleCancel() {
     this.setState({
       visible: false,
@@ -139,6 +152,7 @@ class ToDos extends Component {
           <input
             className='inputs'
             type="text"
+            value={this.state.description}
             onChange={ e => this.setState({ description: e.target.value})}
           />
         </Modal>
@@ -174,6 +188,7 @@ function mapDispatchToProps(dispatch) {
     getToDos,
     updateToDoState,
     createToDo,
+    deleteToDo,
     logOut
   }, dispatch)
 }
