@@ -7,7 +7,7 @@ import {
 
 import Login from './containers/login';
 import ToDos from './containers/todos';
-import Edit from './containers/edit';
+// import Edit from './containers/edit';
 
 import './App.scss';
 
@@ -20,8 +20,8 @@ class App extends Component {
             <Switch>
               <Route path="/" exact component={Login} />
               <Route path="/ToDos" component={ToDos} />
-              <Route path="/Edit" component={Edit} />
-              <Route path="/Create" component={Edit} />
+              {/* <Route path="/Edit" component={Edit} /> */}
+              {/* <Route path="/Create" component={Edit} /> */}
               <Route component={NoMatch} />
             </Switch>
           </div>

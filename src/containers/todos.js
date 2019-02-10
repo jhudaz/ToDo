@@ -7,6 +7,7 @@ import {
   getUser,
   getToDos,
   updateToDoState,
+  createToDo,
   logOut
 } from '../actions';
 
@@ -18,7 +19,8 @@ class ToDos extends Component {
     this.state = {
       done: false,
       visible: false,
-      confirmLoading: false
+      confirmLoading: false,
+      description: ''
     }
     this.prevent = this.prevent.bind(this);
     this.logOutButton = this.logOutButton.bind(this);
@@ -28,7 +30,7 @@ class ToDos extends Component {
     this.addButton = this.addButton.bind(this);
     //MODAL
     this.showModal = this.showModal.bind(this);
-    this.handleOk = this. handleOk.bind(this);
+    this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
 
   }
@@ -107,6 +109,10 @@ class ToDos extends Component {
       ModalText: 'The modal will be closed after two seconds',
       confirmLoading: true,
     });
+    this.props.createToDo(
+      this.state.description,
+      this.props.reducerApp.token
+    )
     setTimeout(() => {
       this.setState({
         visible: false,
@@ -133,7 +139,7 @@ class ToDos extends Component {
           <input
             className='inputs'
             type="text"
-            onChange={() => console.log()}
+            onChange={ e => this.setState({ description: e.target.value})}
           />
         </Modal>
         <h1>{this.props.reducerApp.user.name}</h1>
@@ -167,6 +173,7 @@ function mapDispatchToProps(dispatch) {
     getUser,
     getToDos,
     updateToDoState,
+    createToDo,
     logOut
   }, dispatch)
 }
