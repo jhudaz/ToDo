@@ -16,11 +16,12 @@ class ToDos extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      done:false
+      done: false
     }
     this.prevent = this.prevent.bind(this);
     this.logOutButton = this.logOutButton.bind(this);
     this.createList = this.createList.bind(this);
+    this.handleState = this.handleState.bind(this);
   }
   componentDidMount() {
     this.props.getUser(this.props.reducerApp.token)
@@ -35,6 +36,14 @@ class ToDos extends Component {
     this.props.logOut();
     this.props.history.push('/')
   }
+  handleState(check,i) {
+    console.log('position y check:',i,check);
+    this.props.updateToDoState(
+      this.props.reducerApp.todos[i].id,
+      check,
+      this.props.reducerApp.token
+    )
+  }
   createList(todos, i) {
     return (
       <li index={i}>
@@ -46,6 +55,7 @@ class ToDos extends Component {
                 checkedChildren={<Icon type="check" />}
                 unCheckedChildren={<Icon type="close" />}
                 defaultChecked={this.props.reducerApp.todos[i].done}
+                onClick={(check) => this.handleState(check,i)}
               />
             </li>
           </ul>

@@ -43,6 +43,7 @@ export function getUser(token) {
 }
 //action to update the  todo state
 export function updateToDoState(id, done, token) {
+  console.log('id:',id,'Done:',done,'userID:',token)
   return dispatch => {
     return axios
       .put(`${apiUrl}/todos/todoState`, { id, done })
