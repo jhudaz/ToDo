@@ -19,7 +19,6 @@ export function getToDos(token) {
   }
 }
 
-
 //action to get de user who  log in the app
 export function getUser(token) {
   console.log('id del usuario:', token)
@@ -39,6 +38,21 @@ export function getUser(token) {
       })
       .catch(err => {
         throw err;
+      })
+  }
+}
+//action to update the  todo state
+export function updateToDoState(id, done, token) {
+  return dispatch => {
+    return axios
+      .put(`${apiUrl}/todos/todoState`, { id, done })
+      .then(res =>{
+        dispatch(
+          getToDos(token)
+        )
+      })
+      .catch(err =>{
+        throw err
       })
   }
 }
