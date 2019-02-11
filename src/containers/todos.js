@@ -225,8 +225,8 @@ class ToDos extends Component {
           </ul>
         </form>
         <div className="footer">
-          <p>Jaime Andres Velez Rojas </p>
-          <a href="https://github.com/jhudaz">Github Profile!</a>
+          <a href="https://github.com/jhudaz" target="new_blank
+          ">Jaime Andres Velez Rojas</a>
         </div>
       </div>
     );
