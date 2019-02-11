@@ -187,7 +187,7 @@ class ToDos extends Component {
             {this.props.reducerApp.todos.map((e, i) => this.createList(e, i))}
           </ul>
         </form>
-        <div class="footer">
+        <div className="footer">
           <p>Jaime Andres Velez Rojas </p>
           <a href="https://github.com/jhudaz">Github Profile!</a>
         </div>
