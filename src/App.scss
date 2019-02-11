@@ -1,33 +1,36 @@
 @import '~antd/dist/antd.css';
 
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 .list{
   display: flex;
   justify-content: space-between;
   padding: 20px 0;
   list-style: none;
+}
 
+.footer{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
+.logOut{
+  float: right;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+}
+.user{
+  margin-bottom: 0;
+  .userIcon{
+    font-size: 20px;
+  }
+}
+.userName{
+  cursor: default;
+}
+.component{
+  margin: 20px 20px;
 }

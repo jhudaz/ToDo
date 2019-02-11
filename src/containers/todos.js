@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Switch, Icon, Modal } from 'antd';
+import { Switch, Icon, Modal, Menu, Button } from 'antd';
 
 import {
   getUser,
@@ -14,14 +14,18 @@ import {
 
 import '../App.scss';
 
+const ButtonGroup = Button.Group;
+
 class ToDos extends Component {
   constructor(props) {
     super(props)
     this.state = {
       done: false,
       description: '',
+      signal: '',
       visible: false,
-      confirmLoading: false
+      confirmLoading: false,
+      current: 'mail',
     }
     this.prevent = this.prevent.bind(this);
     this.logOutButton = this.logOutButton.bind(this);
@@ -49,8 +53,11 @@ class ToDos extends Component {
     this.prevent(e);
     this.showModal(e)
   }
+  editButton(e, i) {
+    this.prevent(e);
+  }
   //to delete a todo
-  deleteButton(e,i){
+  deleteButton(e, i) {
     this.prevent(e);
     this.props.deleteToDo(
       this.props.reducerApp.todos[i].id,
@@ -74,17 +81,16 @@ class ToDos extends Component {
   //to create the todo buttons for edit and delete
   createButtons(i) {
     return (
-      <div>
-        <button
-          className="yellow">
+      <ButtonGroup>
+        <Button
+          onClick={e => this.editButton(e, i)}>
           <Icon type="edit" />
-        </button>
-        <button
-          className="red"
-          onClick={ e => this.deleteButton(e, i)}>
+        </Button>
+        <Button
+          onClick={e => this.deleteButton(e, i)}>
           <Icon type="close" />
-        </button>
-      </div>
+        </Button>
+      </ButtonGroup>
     )
   }
   //to create the todos list
@@ -96,6 +102,7 @@ class ToDos extends Component {
             <li>{this.createButtons(i)}</li>
             <li>{todos.description}</li>
             <li>
+              {/*ant design component for the todo state*/}
               <Switch
                 checkedChildren={<Icon type="check" />}
                 unCheckedChildren={<Icon type="close" />}
@@ -142,6 +149,20 @@ class ToDos extends Component {
   render() {
     return (
       <div>
+        <Menu
+          onClick={this.handleClick}
+          mode="horizontal">
+          <Menu.Item className="userName">
+            <h1 className="user"><Icon className="userIcon" type="user" />{this.props.reducerApp.user.name}</h1>
+          </Menu.Item>
+          <Menu.Item key="alipay">
+            <button
+              className="logOut red"
+              onClick={e => this.logOutButton(e)}>
+              Log Out
+            </button>
+          </Menu.Item>
+        </Menu>
         <Modal
           visible={this.state.visible}
           onOk={this.handleOk}
@@ -153,24 +174,23 @@ class ToDos extends Component {
             className='inputs'
             type="text"
             value={this.state.description}
-            onChange={ e => this.setState({ description: e.target.value})}
-          />
+            onChange={e => this.setState({ description: e.target.value })} />
         </Modal>
-        <h1>{this.props.reducerApp.user.name}</h1>
-        <hr />
-        <button
-          className="add green"
-          onClick={e => this.addButton(e)}>
-          Add
-        </button>
-        <ul >
-          {this.props.reducerApp.todos.map((e, i) => this.createList(e, i))}
-        </ul>
-        <button
-          className="logOut red"
-          onClick={e => this.logOutButton(e)}>
-          Log Out
-        </button>
+        <form className="component">
+          <Button
+            className="add green"
+            type="primary"
+            onClick={e => this.addButton(e)}>
+            Add
+          </Button>
+          <ul >
+            {this.props.reducerApp.todos.map((e, i) => this.createList(e, i))}
+          </ul>
+        </form>
+        <div class="footer">
+          <p>Jaime Andres Velez Rojas </p>
+          <a href="https://github.com/jhudaz">Github Profile!</a>
+        </div>
       </div>
     );
   }
