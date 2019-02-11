@@ -22,7 +22,7 @@ class ToDos extends Component {
     this.state = {
       done: false,
       description: '',
-      signal: '',
+      signal: 0,
       visible: false,
       confirmLoading: false,
       current: 'mail',
@@ -55,6 +55,11 @@ class ToDos extends Component {
   }
   editButton(e, i) {
     this.prevent(e);
+    this.setState({
+      signal: i
+    }, () => {
+      this.showModal()
+    })
   }
   //to delete a todo
   deleteButton(e, i) {
@@ -175,6 +180,12 @@ class ToDos extends Component {
             type="text"
             value={this.state.description}
             onChange={e => this.setState({ description: e.target.value })} />
+          <Switch
+            checkedChildren={<Icon type="check" />}
+            unCheckedChildren={<Icon type="close" />}
+            defaultChecked={this.props.reducerApp.todos[this.state.signal].done}
+            onClick={(check) => this.handleState(check, this.state.signal)}
+          />
         </Modal>
         <form className="component">
           <Button
