@@ -46,6 +46,10 @@ class ToDos extends Component {
   componentDidMount() {
     this.props.getUser(this.props.reducerApp.token);
   }
+  //to take the state value of a to do
+  componentDidUpdate() {
+    console.log('')
+  }
   // to prevent the button default action 
   prevent(e) {
     e.preventDefault();
@@ -61,7 +65,7 @@ class ToDos extends Component {
     this.setState({
       signal: i,
       show: true,
-      description: this.props.reducerApp.todos[i].description
+      description: this.props.reducerApp.todos[i].description,
     }, () => {
       this.showModal()
     })
@@ -81,12 +85,15 @@ class ToDos extends Component {
     this.props.history.push('/')
   }
   //to handle the  update of todo state 
-  handleState(check, i) {
+  handleState(check, i, e) {
     this.props.updateToDoState(
       this.props.reducerApp.todos[i].id,
       check,
       this.props.reducerApp.token
     )
+    this.setState({
+      done: !this.state.done
+    })
   }
   //to create the todo buttons for edit and delete
   createButtons(i) {
@@ -126,7 +133,7 @@ class ToDos extends Component {
     )
   }
   //MODAL
-  //show the modal whenhis state is true
+  //show the modal when his state is true
   showModal() {
     this.setState({
       visible: true,
@@ -139,12 +146,12 @@ class ToDos extends Component {
       confirmLoading: true
     });
     if (this.state.show) {
-      console.log('va a actualizar el registro:',this.state.signal)
+      console.log('va a actualizar el registro:', this.state.signal)
       this.props.updateToDo(
         this.props.reducerApp.todos[this.state.signal].id,
         this.state.description,
         this.props.reducerApp.todos[this.state.signal].done,
-        this.props.reducerApp.token
+        this.state.done
       )
     } else {
       this.props.createToDo(
