@@ -23,6 +23,7 @@ class ToDos extends Component {
       done: false,
       description: '',
       signal: 0,
+      show: false,
       visible: false,
       confirmLoading: false,
       current: 'mail',
@@ -56,7 +57,8 @@ class ToDos extends Component {
   editButton(e, i) {
     this.prevent(e);
     this.setState({
-      signal: i
+      signal: i,
+      show:true
     }, () => {
       this.showModal()
     })
@@ -130,7 +132,6 @@ class ToDos extends Component {
   //call the createToDo action
   handleOk() {
     this.setState({
-      ModalText: 'The modal will be closed after two seconds',
       description: '',
       confirmLoading: true
     });
@@ -149,6 +150,7 @@ class ToDos extends Component {
   handleCancel() {
     this.setState({
       visible: false,
+      show:false
     });
   }
   render() {
@@ -170,22 +172,26 @@ class ToDos extends Component {
         </Menu>
         <Modal
           visible={this.state.visible}
-          onOk={this.handleOk}
+          onOk={ this.state.description !== ''? this.handleOk:this.handleCancel }
           confirmLoading={this.state.confirmLoading}
           onCancel={this.handleCancel}
         >
           <h2>Description</h2>
           <input
-            className='inputs'
+            className="inputs"
             type="text"
             value={this.state.description}
-            onChange={e => this.setState({ description: e.target.value })} />
-          <Switch
-            checkedChildren={<Icon type="check" />}
-            unCheckedChildren={<Icon type="close" />}
-            defaultChecked={this.props.reducerApp.todos[this.state.signal].done}
-            onClick={(check) => this.handleState(check, this.state.signal)}
+            onChange={e => this.setState({ description: e.target.value })} 
           />
+          <br/>
+          {this.state.show &&
+            <Switch
+              checkedChildren={<Icon type="check" />}
+              unCheckedChildren={<Icon type="close" />}
+              defaultChecked={this.props.reducerApp.todos[this.state.signal].done}
+              onClick={(check) => this.handleState(check, this.state.signal)}
+            />
+          }
         </Modal>
         <form className="component">
           <Button
