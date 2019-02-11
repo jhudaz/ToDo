@@ -1,6 +1,7 @@
 import axios from 'axios';
 const apiUrl = 'http://localhost:7000';
 
+//action to authenticate a user
 export function authenticate(email, password) {
   return dispatch => {
     return axios

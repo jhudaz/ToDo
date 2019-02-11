@@ -9,6 +9,7 @@ import {
   updateToDoState,
   createToDo,
   deleteToDo,
+  updateToDo,
   logOut
 } from '../actions';
 
@@ -52,13 +53,15 @@ class ToDos extends Component {
   //to add a todo
   addButton(e) {
     this.prevent(e);
-    this.showModal(e)
+    this.showModal()
   }
+  //to edit a todo
   editButton(e, i) {
     this.prevent(e);
     this.setState({
       signal: i,
-      show:true
+      show: true,
+      description: this.props.reducerApp.todos[i].description
     }, () => {
       this.showModal()
     })
@@ -129,16 +132,26 @@ class ToDos extends Component {
       visible: true,
     });
   }
-  //call the createToDo action
+  //call the createToDo or updateToDo action depending of the show value from the state
   handleOk() {
     this.setState({
       description: '',
       confirmLoading: true
     });
-    this.props.createToDo(
-      this.state.description,
-      this.props.reducerApp.token
-    )
+    if (this.state.show) {
+      console.log('va a actualizar el registro:',this.state.signal)
+      this.props.updateToDo(
+        this.props.reducerApp.todos[this.state.signal].id,
+        this.state.description,
+        this.props.reducerApp.todos[this.state.signal].done,
+        this.props.reducerApp.token
+      )
+    } else {
+      this.props.createToDo(
+        this.state.description,
+        this.props.reducerApp.token
+      )
+    }
     setTimeout(() => {
       this.setState({
         visible: false,
@@ -150,7 +163,7 @@ class ToDos extends Component {
   handleCancel() {
     this.setState({
       visible: false,
-      show:false
+      show: false
     });
   }
   render() {
@@ -172,7 +185,7 @@ class ToDos extends Component {
         </Menu>
         <Modal
           visible={this.state.visible}
-          onOk={ this.state.description !== ''? this.handleOk:this.handleCancel }
+          onOk={this.state.description !== '' ? this.handleOk : this.handleCancel}
           confirmLoading={this.state.confirmLoading}
           onCancel={this.handleCancel}
         >
@@ -181,9 +194,9 @@ class ToDos extends Component {
             className="inputs"
             type="text"
             value={this.state.description}
-            onChange={e => this.setState({ description: e.target.value })} 
+            onChange={e => this.setState({ description: e.target.value })}
           />
-          <br/>
+          <br />
           {this.state.show &&
             <Switch
               checkedChildren={<Icon type="check" />}
@@ -226,6 +239,7 @@ function mapDispatchToProps(dispatch) {
     updateToDoState,
     createToDo,
     deleteToDo,
+    updateToDo,
     logOut
   }, dispatch)
 }
