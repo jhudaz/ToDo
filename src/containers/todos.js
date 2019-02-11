@@ -86,7 +86,7 @@ class ToDos extends Component {
           onClick={e => this.editButton(e, i)}>
           <Icon type="edit" />
         </Button>
-        <Button
+        <Button type="danger"
           onClick={e => this.deleteButton(e, i)}>
           <Icon type="close" />
         </Button>
